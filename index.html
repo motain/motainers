@@ -10,7 +10,8 @@
         // the last element should not be followed by a comma.
         members = [
           'dummy',
-          'maximevaly'
+          'maximevaly',
+          'adriendeotto'
         ];
 
         </script>
@@ -59,20 +60,21 @@
         <script>
 
 (function(){
-  for (var i = 0; i < members.length; i++) {
+  var fetch = function(memberLogin) {
     var request = new XMLHttpRequest();
-    request.open('GET', 'members/' + members[i] + '.json', true);
+    var url = 'members/' + memberLogin + '.json';
+    console.log('fetching ' + url);
+    request.open('GET', url, true);
     request.onreadystatechange = function (aEvt) {
       if (request.readyState == 4) {
         if (request.status == 200) {
-//            var text = '{ "name": "Maxime Valy", "github": "maximevaly", "description": "Web Developer @motain" }';
           var member = JSON.parse(request.responseText);//JSON.parse(text); //
           var e = ''
               + '<li class="media">'
               + '  <a class="pull-left" href="https://github.com/' + member.github + '">'
               + '    <img class="media-object" '
               + '      width="64px" '
-              + '      src="members/' + member.name + '.png" '
+              + '      src="members/' + memberLogin + '.png" '
               + '      alt="' + member.name + '" '
               + '      onerror="this.src = \'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-github-128.png\'">'
               + '  </a>'
@@ -89,6 +91,10 @@
       }
     }
     request.send(null);
+  }
+
+  for (var i = 0; i < members.length; i++) {
+    fetch(members[i]);
   }
 })();
 
